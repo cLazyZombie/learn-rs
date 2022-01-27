@@ -1,0 +1,12 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libs = {path = "../libs"}
+
+parking_lot = "0.11.2"
+byteorder = "1.4.3"
