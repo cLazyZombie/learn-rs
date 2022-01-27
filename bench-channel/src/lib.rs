@@ -68,7 +68,8 @@ mod tests {
     #[bench]
     fn bench_arc_mutex(b: &mut test::Bencher) {
         b.iter(|| {
-            let queue = Arc::new(Mutex::new(VecDeque::new()));
+            // let queue = Arc::new(Mutex::new(VecDeque::new()));
+            let queue = Arc::new(Mutex::new(VecDeque::with_capacity(COUNT as usize)));
 
             let send_queue = queue.clone();
             std::thread::spawn(move || {
@@ -105,7 +106,9 @@ mod tests {
     #[bench]
     fn bench_arc_parkinglot_mutex(b: &mut test::Bencher) {
         b.iter(|| {
-            let queue = Arc::new(parking_lot::Mutex::new(VecDeque::new()));
+            let queue = Arc::new(parking_lot::Mutex::new(VecDeque::with_capacity(
+                COUNT as usize,
+            )));
 
             let send_queue = queue.clone();
             std::thread::spawn(move || {
@@ -142,7 +145,10 @@ mod tests {
     #[bench]
     fn bench_arc_parkinglot_rwlock(b: &mut test::Bencher) {
         b.iter(|| {
-            let queue = Arc::new(parking_lot::RwLock::new(VecDeque::new()));
+            // let queue = Arc::new(parking_lot::RwLock::new(VecDeque::new()));
+            let queue = Arc::new(parking_lot::RwLock::new(VecDeque::with_capacity(
+                COUNT as usize,
+            )));
 
             let send_queue = queue.clone();
             std::thread::spawn(move || {
