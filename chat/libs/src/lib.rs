@@ -4,7 +4,12 @@ use serde_json::Result;
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
 pub enum Packet {
-    Chat(ChatPacket),
+    LoginReq(LoginReqPacket),         // client -> server
+    LoginConfirm(LoginConfirmPacket), // server -> client
+    LoginNotify(LoginNotifyPacket),   // server -> client
+    LogoutNotify(LogoutNotifyPacket), // server -> client
+    Chat(ChatPacket),                 // client to server
+    ChatNotify(ChatNotifyPacket),     // server to client
 }
 
 impl Packet {
@@ -29,10 +34,34 @@ impl Packet {
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
 pub struct ChatPacket {
+    pub message: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+pub struct ChatNotifyPacket {
     pub name: String,
     pub message: String,
 }
 
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+pub struct LoginReqPacket {
+    pub name: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+pub struct LoginConfirmPacket {
+    pub users: Vec<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+pub struct LoginNotifyPacket {
+    pub name: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+pub struct LogoutNotifyPacket {
+    pub name: String,
+}
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -40,7 +69,6 @@ mod tests {
     #[test]
     fn serialize_packet() {
         let packet = Packet::Chat(ChatPacket {
-            name: "sender".to_string(),
             message: "hello".to_string(),
         });
         let bytes = packet.get_bytes();

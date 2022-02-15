@@ -8,5 +8,5 @@ edition = "2021"
 [dependencies]
 libs = {path = "../libs"}
 
-parking_lot = "0.11.2"
+parking_lot = "0.12"
 byteorder = "1.4.3"

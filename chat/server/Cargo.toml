@@ -9,6 +9,6 @@ version = "0.1.0"
 libs = {path = "../libs"}
 
 byteorder = "1.4.3"
-tokio = { version = "1.15.0", features = ["full"] }
-parking_lot = "0.11.2"
+tokio = { version = "1.16", features = ["full"] }
+parking_lot = "0.12"
 crossbeam-channel = "0.5.2"
